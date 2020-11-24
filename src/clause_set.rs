@@ -115,10 +115,9 @@ impl ClauseSet {
   pub fn select_literal(&self) -> Literal {
     // I'm going to assume the first element in the clause is random enough
     // for ease (since I'm not too good with rust)
-    if let Some(clause) = self.clauses.choose(&mut rand::thread_rng()) {
-      return *clause.literals.iter().next().unwrap();
-    } else {
-      panic!("this should not happen!");
-    }
+    *self.clauses
+      .choose(&mut rand::thread_rng())
+      .and_then(|clause| clause.literals.iter().next())
+      .unwrap()
   }
 }
